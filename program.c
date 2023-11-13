@@ -27,15 +27,16 @@ typedef struct
 
 int main(int argc, char *argv[])
 {
-    if (argc == 2)
+    int pid;
+    char intrare[100];
+    char out[100];
+    /*strcpy(intrare,"imagine");
+    strcpy(out,"/statistica.txt");
+    strcat(intrare,out);
+    printf("%s",intrare);*/
+    if (argc == 3)
     {
-        int outputFile = creat("statistica.txt", S_IRUSR | S_IWUSR);
-        if (outputFile == -1)
-        {
-            perror("nu s a putut crea directorul");
-            exit(-1);
-        }
-
+        
         DIR *dir = opendir(argv[1]); //folosit pentru deschiderea fisierului->opendir deschide directorul dat in linie de comanda
 
         if (dir == NULL)
@@ -51,8 +52,26 @@ int main(int argc, char *argv[])
             if (entry->d_type == DT_REG) //se parcurg pentru fiecare structura de intare numele si ripul ->d_reg pentru fisiere regulate 
             {
                 char filePath[256];
+                printf("%s",filePath);
+              sprintf(intrare, "%s/statistica_%s.txt", argv[1], entry->d_name);
+            
+                int outputFile = creat(intrare, S_IRUSR | S_IWUSR);
+                  if (outputFile == -1)
+                    {
+                          perror("nu s a putut crea directorul");
+                         exit(-1);
+                         }
+                         
+                
                 snprintf(filePath, sizeof(filePath), "%s/%s", argv[1], entry->d_name);
-
+                pid=fork();
+                if(pid <0)
+                {
+                    perror("eroare");
+                    exit(-1);
+                }
+                if(pid == 0)
+                {
                 int rez = open(filePath, O_RDWR);
 
                 if (rez == -1)
@@ -86,9 +105,12 @@ int main(int argc, char *argv[])
                 sprintf(buff, "Size: %d bytes\n", antet.file_size);
                 write(outputFile, buff, strlen(buff));
 
-                sprintf(buff, "Width: %d\n", info.latime);
-                write(outputFile, buff, strlen(buff));
-
+                sprintf(buff, "Width: %d\n", info.latime);int outputFile = creat(intrare, S_IRUSR | S_IWUSR);
+        if (outputFile == -1)
+        {
+            perror("nu s a putut crea directorul");
+            exit(-1);
+        }
                 sprintf(buff, "Height: %d\n", info.lungime);
                 write(outputFile, buff, strlen(buff));
 
@@ -108,11 +130,15 @@ int main(int argc, char *argv[])
                 write(outputFile, buff, strlen(buff));
 
                 close(rez);
+                close(outputFile);
+                
             }
+            
+            }
+            
         }
 
         closedir(dir);
-        close(outputFile);
     }
     else
     {
