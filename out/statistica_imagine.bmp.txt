@@ -1,0 +1,11 @@
+
+
+File: imagine/imagine.bmp
+Size: 112 bytes
+Width: 83886080
+Height: 65536
+X Pixel: 24
+Y Pixel: -2147483648
+User ID: 112
+Date: 0
+Drept User: Number of lines with character 'c': 90902

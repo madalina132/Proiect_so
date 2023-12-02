@@ -1,0 +1,11 @@
+
+
+File: imagine/fisier.txt
+Size: 543519329 bytes
+Width: 2570
+Height: 0
+X Pixel: 0
+Y Pixel: 0
+User ID: 0
+Date: 0
+Drept User: Number of lines with character 'c': 6
