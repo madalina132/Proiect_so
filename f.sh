@@ -8,8 +8,8 @@ fi
 character="$1"
 
 # Initializare contor
-counter_lines=0
-counter_character=0
+counter_l=0
+counter_ch=0
 
 # Citeste linie cu linie de la intrarea standard
 while IFS= read -r line; do
@@ -19,14 +19,14 @@ while IFS= read -r line; do
 
     # Verifica daca linia respecta conditiile
     if [[ "$line" =~ ^[A-Z][a-z0-9]*[a-z][0-9]*\.$ ]]; then
-        ((counter_lines++))
+        ((counter_l++))
     fi
 
     # Utilizeaza grep pentru a numara aparitiile caracterului in linie
     occurrences=$(echo "$line" | grep -o "$character" | wc -l)
-    ((counter_character += occurrences))
+    ((counter_ch += occurrences))
 done
 
 # Afișează rezultatul
-echo "Numărul de linii care respectă condițiile: $counter_lines"
-echo "Numărul de apariții ale caracterului '$character': $counter_character"
+echo "Numărul de linii care respectă condițiile: $counter_l"
+echo "Numărul de apariții ale caracterului '$character': $counter_ch"
